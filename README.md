@@ -24,15 +24,15 @@ Then make it executable and launch it:
 3. Depacks the .deb installer
 4. Creates systemd Service files:
 
-  a. takserver.service
-  
-  b. takserver-api.service
-  
-  c. takserver-messaging.service
-  
-  d. takserver-plugins.service (Optional to be running)
-  
-  e. takserver-retention.service (Optional to be running)
+    a. takserver.service
+    
+    b. takserver-api.service
+    
+    c. takserver-messaging.service
+    
+    d. takserver-plugins.service (Optional to be running)
+    
+    e. takserver-retention.service (Optional to be running)
   
 6. Removes init.d files
 7. Modify the `postinst` script to support the systemd updates
