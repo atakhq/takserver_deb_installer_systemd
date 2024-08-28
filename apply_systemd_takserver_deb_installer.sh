@@ -8,7 +8,7 @@
 cd /tmp/
 
 #Download the deb
-DEB_GDRIVE_ID="xxxxxxxx"
+DEB_GDRIVE_ID="173LmjvmDBcBBGXBJ8sKVYbbMrF-s4Ux8"
 DEB_FILE_NAME="takserver_5.2-RELEASE16_all"
 
 # Check if the file already exists
@@ -29,11 +29,11 @@ sudo dpkg-deb -R "${DEB_FILE_NAME}.deb" "${DEPACK_DIR}"
 
 # System D Support changes below
 
-####################################
+######################
 
 # Create the new systemd service files
 
-####################################
+#####################
 
 # Define the directory where the systemd files will be written
 DEB_DEPACKED_SYSTEMD_DIR="/tmp/tak_deb_depacked/etc/systemd/system"
@@ -65,8 +65,8 @@ Type=exec
 WantedBy=multi-user.target
 EOL
 
-# Write the takserver-config.service file
-sudo cat <<EOL > "$DEB_DEPACKED_SYSTEMD_DIR/takserver-config.service"
+# Write the takserver.service file
+sudo cat <<EOL > "$DEB_DEPACKED_SYSTEMD_DIR/takserver.service"
 [Unit]
 Description=TAK Server Config Service
 After=mulit-user.target
@@ -92,7 +92,7 @@ EOL
 sudo cat <<EOL > "$DEB_DEPACKED_SYSTEMD_DIR/takserver-messaging.service"
 [Unit]
 Description=TAK Server Messaging Service
-Requires=takserver-config.service
+Requires=takserver.service
 Before=takserver-api.service
 DefaultDependencies=no
 
@@ -193,15 +193,37 @@ chmod 644 /opt/tak/logging-restrictsize.xml
 chmod 544 /opt/tak/*.bat
 chmod 544 /opt/tak/*.sh
 
-# Copy systemd service files to the correct location
-cp /etc/systemd/system/takserver-config.service /etc/systemd/system/
-cp /etc/systemd/system/takserver-messaging.service /etc/systemd/system/
-cp /etc/systemd/system/takserver-api.service /etc/systemd/system/
-cp /etc/systemd/system/takserver-plugin.service /etc/systemd/system/
-cp /etc/systemd/system/takserver-retention.service /etc/systemd/system/
+chmod 544 /opt/tak/config/*.sh
+chmod u+w /opt/tak/config/takserver-config.sh
+cp /opt/tak/config/takserver-config.sh /opt/tak
+chown -f tak:tak /opt/tak/takserver-config.sh 2>/dev/null
+
+chmod 544 /opt/tak/messaging/*.sh
+chmod u+w /opt/tak/messaging/takserver-messaging.sh
+cp /opt/tak/messaging/takserver-messaging.sh /opt/tak
+chown -f tak:tak /opt/tak/takserver-messaging.sh 2>/dev/null
+
+chmod 544 /opt/tak/API/*.sh
+chmod u+w /opt/tak/API/takserver-api.sh
+cp /opt/tak/API/takserver-api.sh /opt/tak
+chown -f tak:tak /opt/tak/takserver-api.sh 2>/dev/null
+
+chmod 544 /opt/tak/takserver-plugins.sh
+chmod u+w /opt/tak/takserver-plugins.sh
+chown -f tak:tak /opt/tak/takserver-plugins.sh 2>/dev/null
+
+chmod 544 /opt/tak/retention/*.sh
+chmod u+w /opt/tak/retention/takserver-retention.sh
+cp /opt/tak/retention/takserver-retention.sh /opt/tak
+chown -f tak:tak /opt/tak/takserver-retention.sh 2>/dev/null
+
+chmod 500 /opt/tak/certs/*.sh
+chmod 600 /opt/tak/certs/cert-metadata.sh
+
+
 
 # Set correct permissions on systemd service files
-chmod 644 /etc/systemd/system/takserver-config.service
+chmod 644 /etc/systemd/system/takserver.service
 chmod 644 /etc/systemd/system/takserver-messaging.service
 chmod 644 /etc/systemd/system/takserver-api.service
 chmod 644 /etc/systemd/system/takserver-plugin.service
@@ -209,7 +231,7 @@ chmod 644 /etc/systemd/system/takserver-retention.service
 
 # Enable systemd services
 systemctl daemon-reload
-systemctl enable takserver-config.service
+systemctl enable takserver.service
 systemctl enable takserver-messaging.service
 systemctl enable takserver-api.service
 systemctl enable takserver-plugin.service
@@ -354,7 +376,3 @@ echo "Your custom .deb is now ready to use for install: "
 # CLEANUP
 
 sudo rm -rf /tmp/tak_deb_depacked/
-
-
-
-
