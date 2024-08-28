@@ -8,7 +8,7 @@
 cd /tmp/
 
 #Download the deb
-DEB_GDRIVE_ID="173LmjvmDBcBBGXBJ8sKVYbbMrF-s4Ux8"
+DEB_GDRIVE_ID="xxxxxxxxxxxxxxxxxxxxxxxxx"
 DEB_FILE_NAME="takserver_5.2-RELEASE16_all"
 
 # Check if the file already exists
