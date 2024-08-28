@@ -23,14 +23,20 @@ Then make it executable and launch it:
 2. Downloads the target TAK Server deb intaller from your google drive
 3. Depacks the .deb installer
 4. Creates systemd Service files:
+
   a. takserver.service
+  
   b. takserver-api.service
+  
   c. takserver-messaging.service
+  
   d. takserver-plugins.service (Optional to be running)
+  
   e. takserver-retention.service (Optional to be running)
-5. Removes init.d files
-6. Modify the `postinst` script to support the systemd updates
-7. Saves your new smaller .deb installer in `/tmp/<tak_release_full>_systemd_mod.deb`
+  
+6. Removes init.d files
+7. Modify the `postinst` script to support the systemd updates
+8. Saves your new smaller .deb installer in `/tmp/<tak_release_full>_systemd_mod.deb`
 
 ### Install the new deb file
 
