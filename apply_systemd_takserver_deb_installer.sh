@@ -8,7 +8,7 @@
 cd /tmp/
 
 #Download the deb
-DEB_GDRIVE_ID="xxxxxxxxxxxxxxxxxxxxxxxxx"
+DEB_GDRIVE_ID="xxxxxxxxxxxxxxxxxxxxxxxx"
 DEB_FILE_NAME="takserver_5.2-RELEASE16_all"
 
 # Check if the file already exists
@@ -197,16 +197,19 @@ chmod 544 /opt/tak/config/*.sh
 chmod u+w /opt/tak/config/takserver-config.sh
 cp /opt/tak/config/takserver-config.sh /opt/tak
 chown -f tak:tak /opt/tak/takserver-config.sh 2>/dev/null
+rm -rf /opt/tak/config
 
 chmod 544 /opt/tak/messaging/*.sh
 chmod u+w /opt/tak/messaging/takserver-messaging.sh
 cp /opt/tak/messaging/takserver-messaging.sh /opt/tak
 chown -f tak:tak /opt/tak/takserver-messaging.sh 2>/dev/null
+rm -rf /opt/tak/messaging
 
 chmod 544 /opt/tak/API/*.sh
 chmod u+w /opt/tak/API/takserver-api.sh
 cp /opt/tak/API/takserver-api.sh /opt/tak
 chown -f tak:tak /opt/tak/takserver-api.sh 2>/dev/null
+rm -rf /opt/tak/API
 
 chmod 544 /opt/tak/takserver-plugins.sh
 chmod u+w /opt/tak/takserver-plugins.sh
@@ -219,7 +222,6 @@ chown -f tak:tak /opt/tak/takserver-retention.sh 2>/dev/null
 
 chmod 500 /opt/tak/certs/*.sh
 chmod 600 /opt/tak/certs/cert-metadata.sh
-
 
 
 # Set correct permissions on systemd service files
@@ -261,6 +263,9 @@ fi
 
 chown -fR tak:tak /opt/tak/conf
 chown -fR tak:tak /opt/tak/mission-archive
+rm -rf /opt/tak/retention
+rm -rf /opt/tak/launcher
+rm -rf /opt/tak/takserver-plugins
 
 # Set up directories and permissions for logs and other files
 chmod 755 /opt/tak/utils
@@ -351,16 +356,6 @@ EOL
 sudo chmod +x "${DEPACK_DIR}/DEBIAN/postinst"
 
 
-######################
-
-# Delete the init.d files since we dont need them
-
-#####################
-
-TAK_DEPACK_DIR="${DEPACK_DIR}/opt/tak"
-sudo rm -rf "${TAK_DEPACK_DIR}/API" "${TAK_DEPACK_DIR}/config" "${TAK_DEPACK_DIR}/launcher" "${TAK_DEPACK_DIR}/messaging" "${TAK_DEPACK_DIR}/retention"
-
-
 ####################################
 
 # Rebuild the .deb installer for use
@@ -375,4 +370,8 @@ echo "Your custom .deb is now ready to use for install: "
 
 # CLEANUP
 
-sudo rm -rf /tmp/tak_deb_depacked/
+#sudo rm -rf /tmp/tak_deb_depacked/
+
+
+
+
